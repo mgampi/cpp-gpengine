@@ -342,10 +342,10 @@ wstring CGTFile::readUnicodeString () {
   char readChar[2];
   wstring str;
   
-  theStream->read ((char*) &readChar, 2);
-  while ((readChar[0] != 0) && (!theStream->eof())){
-    str.append (1, (wchar_t) ((readChar[1] << 8) | readChar[0]));
-    theStream->read ((char*) &readChar, 2);
+  theStream->read (readChar, 2);
+  while ((readChar[0] != 0 || readchar[1]!=0) && (!theStream->eof())){
+    str.append (1, static_cast<wchar_t>((readChar[1] << 8) | readChar[0]));
+    theStream->read (readChar, 2);
   }
   return str;
 }
